@@ -1,12 +1,19 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Navbar } from './layout/navbar';
+import { PROFILE } from './core/portfolio.data';
 
 @Component({
-  imports: [RouterOutlet],
   selector: 'app-root',
-  styleUrl: './app.scss',
-  templateUrl: './app.html',
+  standalone: true,
+  imports: [RouterOutlet, Navbar],
+  template: `
+    <app-navbar />
+    <main><router-outlet /></main>
+    <footer class="foot container"><p>&copy; {{ year }} {{ name }}.</p></footer>
+  `,
 })
 export class App {
-  protected readonly title = signal('portafolio');
+  protected readonly year = new Date().getFullYear();
+  protected readonly name = PROFILE.fullName;
 }
